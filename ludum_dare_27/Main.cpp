@@ -1,3 +1,5 @@
+#include "Game.h"
+
 #include <iostream>
 #include <SDL.h>
 #include <SDL_opengl.h>
@@ -7,6 +9,17 @@
 int main(int argc, char* argv[])
 {
 
-	SDL_Init(SDL_INIT_EVERYTHING);
+	Game g = Game();
+
+	try
+	{
+		g.run();
+	}
+	catch(int exception)
+	{
+		std::cout << "Exception caought: " << exception << std::endl;
+	}
+	
+
 	return 0;
 }

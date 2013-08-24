@@ -13,8 +13,9 @@
 #include <iostream>
 #include <assert.h>
 #include <math.h>
+#include <cmath>
 
-const double PI = M_PI;
+const double PI = 3.14159;
 
 class Vector {
 public:
