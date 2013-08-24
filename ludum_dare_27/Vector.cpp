@@ -207,7 +207,7 @@ Vector Vector::rotate(const Vector& axis, const float angle) const
     Vector t = (*this);
 
     // NOTE: this is here because the cos(PI/2) is not so accurate
-    double cos_angle = (cos(angle) < 1/1000000.0f) ? 0.0f : cos(angle);
+    double cos_angle = (cos(angle) < 1/100000.0f) ? 0.0f : cos(angle);
 
     t = ((t - axis * (axis * t)) * cos_angle) + ((crossProduct(t, axis)) * sin(angle)) + (axis * (axis * t));
     return t;

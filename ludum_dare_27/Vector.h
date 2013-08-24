@@ -68,6 +68,7 @@ public:
 
 };
 
+const Vector VECTOR_ZERO   = Vector(0, 0, 0);
 const Vector VECTOR_AXIS_X = Vector(1, 0, 0);
 const Vector VECTOR_AXIS_Y = Vector(0, 1, 0);
 const Vector VECTOR_AXIS_Z = Vector(0, 0, 1);

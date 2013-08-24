@@ -18,9 +18,9 @@ public:
 
 public:
 	std::vector<Entity*> entities;
+	Entity* player;
 
 	float** terrain;
 	int width;
 	int height;
 };
-

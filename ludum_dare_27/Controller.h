@@ -2,6 +2,8 @@
 
 #include <map>
 
+#include <SDL.h>
+
 class Controller
 {
 public:
@@ -18,11 +20,23 @@ public:
 	int mouseX();
 	int mouseY();
 
+	void showMouse();
+	void hideMouse();
+
+	void resetMouseMoved();
+	bool mouseMoved();
+
+	void setMouseSpeed(float ms);
+	float getMouseSpeed();
+
 private:
 	Controller(void);
 
+	bool mouseDidMove;
+
 	int offsetx, offsety;
 	int mousex, mousey;
+	float mouseSpeed;
 
 	std::map<short, bool> keyStatus;
 

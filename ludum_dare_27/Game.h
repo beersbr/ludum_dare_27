@@ -3,6 +3,8 @@
 #include "World.h"
 #include "Controller.h"
 
+#include "Player.h"
+
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <glut.h>
@@ -44,10 +46,6 @@ public:
 
 	int windowWidth;
 	int windowHeight;
-
-private:
-	void showMouse();
-	void hideMouse();
 
 private:
 	float mouseSpeed;

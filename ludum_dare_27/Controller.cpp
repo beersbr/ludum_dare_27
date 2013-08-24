@@ -14,6 +14,8 @@ Controller* Controller::instance()
 Controller::Controller(void)
 {
 	keyStatus.clear();
+	mouseDidMove = false;
+	mouseSpeed = 0.03f;
 }
 
 void Controller::onKeyDown(short keyCode)
@@ -28,6 +30,7 @@ void Controller::onKeyUp(short keyCode)
 
 void Controller::onMouseMove(int offx, int offy, int mX, int mY)
 {
+	mouseDidMove = true;
 	offsetx = offx;
 	offsety = offy;
 	mousex = mX;
@@ -57,4 +60,35 @@ int Controller::mouseX()
 int Controller::mouseY()
 {
 	return mousey;
+}
+
+void Controller::showMouse()
+{
+	SDL_SetRelativeMouseMode((SDL_bool)false);
+}
+
+
+void Controller::hideMouse()
+{
+	SDL_SetRelativeMouseMode((SDL_bool)true);
+}
+
+void Controller::resetMouseMoved()
+{
+	mouseDidMove = false;
+}
+
+bool Controller::mouseMoved()
+{
+	return mouseDidMove;
+}
+
+void Controller::setMouseSpeed(float ms)
+{
+	mouseSpeed = ms;
+}
+
+float Controller::getMouseSpeed()
+{
+	return mouseSpeed;
 }

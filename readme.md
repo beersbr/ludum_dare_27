@@ -19,3 +19,7 @@
 * need to move hide mouse stuff from game to controller
 * finish the player class so that the camera is attached to the player
 * impolement the state vector so that the player life can be 'replayed'
+
+## 1:58 pm saturday
+* Figured out how I am going to pass data around to the entities.
+* Now starting on collsision.

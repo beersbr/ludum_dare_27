@@ -15,8 +15,11 @@ void Game::init()
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		throw COULD_NOT_INIT_SDL;
 
-	windowWidth = 1280;
-	windowHeight = 800;
+	//windowWidth = 1280;
+	//windowHeight = 800;
+
+	windowWidth = 1920;
+	windowHeight = 1080;
 
 	pWindow = SDL_CreateWindow("Ludum Dare 27 :: 10 Seconds", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
@@ -33,7 +36,6 @@ void Game::init()
 	if(!glContext)
 		throw COULD_NOT_CREATE_GL_CONTEXT;
 
-	mouseSpeed = 0.05;
 	frameStart = 0.0f;
 	frameTime = 0.0f;
 	fps = 60.0f;
@@ -47,6 +49,8 @@ void Game::init()
 
 void Game::init_gl()
 {
+	SDL_GL_SetSwapInterval(1);
+
 	glShadeModel(GL_SMOOTH);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -77,9 +81,6 @@ void Game::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	gluLookAt(0.0f, 10.0f, 20.0f,
-			  0.0f, 0.0f, 0.0f,
-			  0.0f, 1.0f, 0.0f);
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -100,6 +101,7 @@ void Game::update()
 
 void Game::handleEvents()
 {
+	Controller::instance()->resetMouseMoved();
 	while(SDL_PollEvent(&event))
 	{
 		switch(event.type)
@@ -129,9 +131,16 @@ void Game::handleEvents()
 				switch(event.window.event)
 				{
 				case SDL_WINDOWEVENT_HIDDEN:
+					Controller::instance()->showMouse();
+					break;
 				case SDL_WINDOWEVENT_SHOWN:
+					Controller::instance()->hideMouse();
+					break;
 				case SDL_WINDOWEVENT_LEAVE:
+					Controller::instance()->showMouse();
+					break;
 				case SDL_WINDOWEVENT_ENTER:
+					Controller::instance()->hideMouse();
 					break;
 				}
 				break;
@@ -154,7 +163,10 @@ void Game::run()
 	startTime = SDL_GetTicks();
 
 	world = new World();
-	world->generateMap(1000, 1000);
+	world->generateMap(500, 500);
+
+	world->player = new Player();
+	((Player*)(world->player))->playerState = ISFREECAM;
 
 	while(gamestate == RUNNING)
 	{
@@ -167,23 +179,12 @@ void Game::run()
 		++totalFrames;
 		framesPerSecond = totalFrames/((float)SDL_GetTicks() - startTime)/1000.0;
 
+		std::cerr << framesPerSecond << std::endl;
+
 		frameTime = SDL_GetTicks() - frameStart;
 		if(frameTime < delayTime)
 			SDL_Delay((int)(delayTime - frameTime));
 	}
 
 	clean();
-}
-
-// ***************************** Private Methods
-
-void Game::showMouse()
-{
-	SDL_SetRelativeMouseMode((SDL_bool)false);
-}
-
-
-void Game::hideMouse()
-{
-	SDL_SetRelativeMouseMode((SDL_bool)true);
 }

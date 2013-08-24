@@ -1,6 +1,5 @@
 #include "World.h"
 
-
 World::World(void)
 {
 	terrain = nullptr;
@@ -18,6 +17,13 @@ World::~World(void)
 
 void World::render()
 {
+	player->render();
+
+	glBegin(GL_LINES);
+		glColor3f(1.0f, 0.0f, 1.0f);
+		glVertex3f(0.0f, 10.0f, 0.0f);
+		glVertex3f(0.0f, -10.0f, 0.0f);
+	glEnd();
 
 	glColor3f(1.0f, 1.0f, 1.0f);
 	for(int z = 0; z < height-1; ++z)
@@ -30,11 +36,13 @@ void World::render()
 		}
 		glEnd();
 	}
+
+
 }
 
 void World::update()
 {
-
+	player->update(this);
 }
 
 void World::generateMap(int w, int h)

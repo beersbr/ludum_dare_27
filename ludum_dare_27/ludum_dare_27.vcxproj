@@ -95,6 +95,7 @@
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Helper.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="World.h" />

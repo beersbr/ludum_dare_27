@@ -6,10 +6,10 @@ class Entity
 {
 public:
 	Entity(void);
-	~Entity(void);
+	virtual ~Entity(void);
 
-	virtual void draw() = 0;
-	virtual void update() = 0;
+	virtual void update(void* someData) = 0;
+	virtual void render() = 0;
 
 public:
 	Vector pos; // position
@@ -18,4 +18,3 @@ public:
 	Vector size;
 
 };
-
