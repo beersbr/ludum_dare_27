@@ -10,6 +10,12 @@
 * Grabbed the vector class from my github.
 * Started setting up the game class.
 
-## 2:53 am saturda
+## 2:53 am saturday
 * Alot of the base code is written.
 * Camera should be a singleton.
+
+## 3:20 am saturday
+* updated the controller a bit, included mouse stuff
+* need to move hide mouse stuff from game to controller
+* finish the player class so that the camera is attached to the player
+* impolement the state vector so that the player life can be 'replayed'

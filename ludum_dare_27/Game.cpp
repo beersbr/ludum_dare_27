@@ -121,6 +121,7 @@ void Game::handleEvents()
 			}
 			case SDL_MOUSEMOTION:
 			{
+				Controller::instance()->onMouseMove(event.motion.xrel, event.motion.yrel, event.motion.x, event.motion.y);
 				break;
 			}
 			case SDL_WINDOWEVENT:
@@ -147,7 +148,6 @@ void Game::clean()
 
 void Game::run()
 {
-
 	init();
 	init_gl();
 

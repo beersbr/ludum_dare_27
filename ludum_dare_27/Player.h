@@ -17,5 +17,6 @@ public:
 
 public:
 	Camera camera;
+	Vector direction;
 };
 
