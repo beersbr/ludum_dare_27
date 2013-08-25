@@ -38,6 +38,32 @@ void Controller::onMouseMove(int offx, int offy, int mX, int mY)
 	mousey = mY;
 }
 
+void Controller::onMouseDown(int button, int x, int y)
+{
+	mouseStatus[button] = true;
+}
+
+void Controller::onMouseUp(int button, int x, int y)
+{
+	mouseStatus[button] = false;
+	mousePressed[button] = true;
+}
+
+bool Controller::isMouseButtonDown(short button)
+{
+	return mouseStatus[button];
+}
+
+bool Controller::isMouseBUttonPressed(short button)
+{
+	return mousePressed[button];
+}
+
+void Controller::resetMouseClicks()
+{
+	mousePressed.clear();
+}
+
 bool Controller::isKeyDown(short keyCode)
 {
 	return keyStatus[keyCode];

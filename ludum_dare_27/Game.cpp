@@ -58,6 +58,13 @@ void Game::init_gl()
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_PROGRAM_POINT_SIZE);
 	glEnable(GL_CULL_FACE);
+	glEnable(GL_TEXTURE_2D);
+
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+
+	glEnable(GL_LIGHTING);
+
 	//glEnable(GL_MULTISAMPLE_ARB);
 	//glEnable(GL_MULTISAMPLE);
 	
@@ -122,6 +129,16 @@ void Game::handleEvents()
 				Controller::instance()->onMouseMove(event.motion.xrel, event.motion.yrel, event.motion.x, event.motion.y);
 				break;
 			}
+			case SDL_MOUSEBUTTONDOWN:
+			{
+				Controller::instance()->onMouseClick(event.button.button, event.button.x, event.button.y);
+				break;
+			}
+			case SDL_MOUSEBUTTONUP:
+			{
+				Controller::instance()->onMouseClick(event.button.button, event.button.x, event.button.y);
+				break;
+			}
 			case SDL_WINDOWEVENT:
 			{
 				switch(event.window.event)
@@ -166,7 +183,11 @@ void Game::run()
 	world->player = new Player();
 	((Player*)(world->player))->playerState = ISFREECAM;
 
+	world->entities.push_back(new Block(Vector(0, -1, 0), Vector(100, 2, 100)));
 	world->entities.push_back(new Block(Vector(0, 1, 0), Vector(2, 2, 2)));
+	world->entities.push_back(new Block(Vector(2, 3, 0), Vector(2, 2, 2)));
+	world->entities.push_back(new Block(Vector(4, 5, 0), Vector(2, 2, 2)));
+	world->entities.push_back(new Block(Vector(6, 7, 0), Vector(2, 2, 2)));
 
 	while(gamestate == RUNNING)
 	{

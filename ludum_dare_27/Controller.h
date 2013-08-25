@@ -4,6 +4,13 @@
 
 #include <SDL.h>
 
+struct MouseClick
+{
+	int button;
+	int x;
+	int y;
+};
+
 class Controller
 {
 public:
@@ -12,9 +19,14 @@ public:
 	void onKeyDown(short keyCode);
 	void onKeyUp(short keyCode);
 	void onMouseMove(int offX, int offY, int mX, int mY);
+	void onMouseDown(int button, int x, int y);
+	void onMouseUp(int button, int x, int y);
 
 	bool isKeyDown(short keyCode);
 	bool isKeyPressed(short keyCode);
+
+	bool isMouseButtonDown(short button);
+	bool isMouseBUttonPressed(short button);
 
 	void resetKeyPressed();
 
@@ -26,6 +38,7 @@ public:
 	void showMouse();
 	void hideMouse();
 
+	void resetMouseClicks();
 	void resetMouseMoved();
 	bool mouseMoved();
 
@@ -43,6 +56,9 @@ private:
 
 	std::map<short, bool> keyStatus;
 	std::map<short, bool> keyPressed;
+
+	std::map<short, bool> mouseStatus;
+	std::map<short, bool> mousePressed;
 
 	static Controller* _instance;
 };

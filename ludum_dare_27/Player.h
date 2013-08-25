@@ -33,6 +33,7 @@ public:
 	Vector direction;
 	Vector jumpVector;
 	Vector force;
+	Vector lightPos;
 
 	float accSpeed;
 	float friction;

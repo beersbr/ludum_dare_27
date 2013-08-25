@@ -10,12 +10,13 @@ public:
 	static Resources* instance();
 
 	void createPngResource(std::string path, std::string tag);
-	FIBITMAP* getResource();
+	FIBITMAP* getResource(std::string tag);
+	BYTE* getOpenGLTExture(std::string tag);
 
 private:
 	Resources(void);
 	static Resources* instance_;
 
-	std::map<std::string, FIBITMAP*> resourses;
+	std::map<std::string, FIBITMAP*> resources;
 };
 

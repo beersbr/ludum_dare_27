@@ -17,6 +17,14 @@ World::~World(void)
 
 void World::render()
 {
+
+	GLfloat LightAmbient[]= { 0.5f, 0.5f, 0.5f, 1.0f }; 
+	GLfloat LightDiffuse[]= { 1.0f, 1.0f, 1.0f, 1.0f }; 
+	GLfloat LightPosition[]= { 0.0f, 15.0f, 0.0f, 1.0f }; 
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDiffuse);
+
 	player->render();
 
 	glBegin(GL_LINES);
@@ -26,25 +34,27 @@ void World::render()
 	glEnd();
 
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glColor3f(1.0f, 1.0f, 1.0f);
-	for(int z = 0; z < height-1; ++z)
-	{
-		glBegin(GL_TRIANGLE_STRIP);
-		for(int x = 0; x < width-1; ++x)
-		{
-			glVertex3f(x-width/2, terrain[x][z], z-height/2);
-			glVertex3f(x-width/2, terrain[x][z+1], (z+1)-height/2);
-		}
-		glEnd();
-	}
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glColor3f(1.0f, 1.0f, 1.0f);
+	//for(int z = 0; z < height-1; ++z)
+	//{
+	//	glBegin(GL_TRIANGLE_STRIP);
+	//	for(int x = 0; x < width-1; ++x)
+	//	{
+	//		glVertex3f((GLfloat)x-width/2, (GLfloat)terrain[x][z], (GLfloat)z-height/2);
+	//		glVertex3f((GLfloat)x-width/2, (GLfloat)terrain[x][z+1], (GLfloat)(z+1)-height/2);
+	//	}
+	//	glEnd();
+	//}
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	std::vector<Entity*>::iterator it = entities.begin();
 	for(it; it != entities.end(); ++it)
 	{
 		(*it)->render();
 	}
+
+	glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);
 
 }
 

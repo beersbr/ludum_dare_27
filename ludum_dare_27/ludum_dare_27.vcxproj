@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>T:\LIBS\SDL-2.0.0-7628\include;T:\LIBS\glut-3.7.6-bin;$(IncludePath)</IncludePath>
-    <LibraryPath>T:\LIBS\glut-3.7.6-bin;T:\LIBS\SDL-2.0.0-7628\VisualC\SDL\Win32\Debug;T:\LIBS\SDL-2.0.0-7628\VisualC\SDLmain\Win32\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>T:\LIBS\SDL-2.0.0-7628\include;T:\LIBS\glut-3.7.6-bin;$(ProjectDir)..\ThirdParty\FreeImage3154\FreeImage\Source;$(IncludePath)</IncludePath>
+    <LibraryPath>T:\LIBS\glut-3.7.6-bin;T:\LIBS\SDL-2.0.0-7628\VisualC\SDL\Win32\Debug;T:\LIBS\SDL-2.0.0-7628\VisualC\SDLmain\Win32\Debug;$(ProjectDir)..\ThirdParty\FreeImage3154\FreeImage\Debug\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -59,7 +59,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2Main.lib;opengl32.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2Main.lib;opengl32.lib;glut32.lib;freeImaged.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -10,6 +10,9 @@ Player::Player(void)
 	pos.y = 10;
 	pos.z = 100;
 
+	lightPos = pos;
+	lightPos.y += 0.5;
+
 	acc = VECTOR_ZERO;
 	vel = VECTOR_ZERO;
 
@@ -65,13 +68,13 @@ void Player::update(void* w)
 			{
 				Vector v = direction.toUnit();
 				v.y = 0;
-				vel += v*(accSpeed/4);
+				vel += v*(accSpeed/5);
 			}
 			if(Controller::instance()->isKeyDown(SDL_SCANCODE_S))
 			{
 				Vector v = direction.toUnit();
 				v.y = 0;
-				vel -= v*(accSpeed/4);
+				vel -= v*(accSpeed/5);
 			}
 			if(Controller::instance()->isKeyDown(SDL_SCANCODE_A))
 			{
@@ -79,7 +82,7 @@ void Player::update(void* w)
 				Vector v = direction.toUnit();
 				v.y = 0;
 				v = v.rotate(VECTOR_AXIS_Y, PI/2);
-				vel -= v*(accSpeed/4);
+				vel -= v*(accSpeed/5);
 
 			}
 			if(Controller::instance()->isKeyDown(SDL_SCANCODE_D))
@@ -88,7 +91,7 @@ void Player::update(void* w)
 				Vector v = direction.toUnit();
 				v.y = 0;
 				v = v.rotate(VECTOR_AXIS_Y, PI/2);
-				vel += v*(accSpeed/4);
+				vel += v*(accSpeed/5);
 			}
 
 			// check intersection with terrain
@@ -97,7 +100,7 @@ void Player::update(void* w)
 			{
 				float y = world->terrain[(int)pos.x+(world->width/2)][(int)pos.z+(world->height/2)];
 
-				if((pos.y + vel.y) < y)
+				if((pos.y + vel.y) <= y)
 				{
 					pos.y = y;
 					vel.y = 0;
@@ -177,8 +180,15 @@ void Player::update(void* w)
 			if(pos.x < (world->width/2) && pos.x >= (-world->width/2)
 				&& pos.z < (world->height/2) && pos.z >= (-world->height/2))
 			{
-
 				float y = world->terrain[(int)pos.x+(world->width/2)][(int)pos.z+(world->height/2)];
+				if((pos.y + vel.y) < y)
+				{
+					pos.y = y;
+					vel.y = 0;
+					playerState = ISRUNNING;
+				}
+				else
+					vel += world->gravity;
 
 			}
 			else
