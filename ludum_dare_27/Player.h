@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Controller.h"
 #include "World.h"
+#include "Block.h"
 
 #include <SDL.h>
 

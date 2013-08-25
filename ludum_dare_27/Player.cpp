@@ -19,6 +19,10 @@ Player::Player(void)
 
 	accSpeed = 0.05;
 	friction = 0.86;
+
+	size.x = 1.2;
+	size.z = 1.2;
+	size.y = 2.8;
 }
 
 Player::~Player(void)
@@ -228,6 +232,55 @@ void Player::update(void* w)
 	}
 
 	pos += vel;
+
+	//check collision
+	// TODO: hash bucket the entities
+	std::vector<Entity*>::iterator it = world->entities.begin();
+	for(it; it != world->entities.end(); ++it)
+	{
+		if(Entity::colliding(this, *it))
+		{
+			// TODO: collision is happening...
+			((Block*)(*it))->setColliding(true);
+
+			Vector sz = Vector(size.x/2 + (*it)->size.x/2,
+								size.y/2 + (*it)->size.y/2,
+								size.z/2 + (*it)->size.z/2);
+
+			Vector dist = this->pos - (*it)->pos;
+			Vector d = dist;
+			
+			Vector non_dist = Vector((fabs(dist.x) - sz.x), (fabs(dist.y) - sz.y), (fabs(dist.z) - sz.z));
+			Vector abs_dist = Vector(fabs(fabs(dist.x) - sz.x), fabs(fabs(dist.y) - sz.y), fabs(fabs(dist.z) - sz.z));
+			
+			if(abs_dist.x < abs_dist.y && abs_dist.x != 0.0 && abs_dist.x < abs_dist.z)
+			{
+				dist = Vector(abs_dist.x*-1, 0, 0);
+				pos += dist*(SIGN(d.x)*-1);
+				vel.x = 0;
+			}
+			if(abs_dist.y < abs_dist.x && abs_dist.y < abs_dist.z)
+			{
+				dist = Vector(0, abs_dist.y*-1, 0);
+				pos += dist*(SIGN(d.y)*-1);
+				vel.y = 0;
+
+				if(SIGN(d.y) > 0)
+					playerState = ISRUNNING;
+			}
+			if(abs_dist.z < abs_dist.y && abs_dist.z < abs_dist.x)
+			{
+				dist = Vector(0, 0, abs_dist.z*-1);
+				pos += dist*(SIGN(d.z)*-1);
+				vel.z = 0;
+			}
+		}
+		else
+		{
+			((Block*)(*it))->setColliding(false);
+		}
+	}
+
 
 	camera.pos = pos;
 	camera.pos.y += 2.3f;

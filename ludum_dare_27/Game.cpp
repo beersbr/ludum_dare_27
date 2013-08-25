@@ -1,6 +1,5 @@
 #include "Game.h"
 
-
 Game::Game(void)
 {
 }
@@ -81,11 +80,7 @@ void Game::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 	world->render();
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	SDL_GL_SwapWindow(pWindow);
 }
@@ -170,6 +165,8 @@ void Game::run()
 
 	world->player = new Player();
 	((Player*)(world->player))->playerState = ISFREECAM;
+
+	world->entities.push_back(new Block(Vector(0, 1, 0), Vector(2, 2, 2)));
 
 	while(gamestate == RUNNING)
 	{

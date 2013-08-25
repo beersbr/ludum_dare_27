@@ -4,6 +4,7 @@
 #include "Controller.h"
 
 #include "Player.h"
+#include "Block.h"
 
 #include <SDL.h>
 #include <SDL_opengl.h>

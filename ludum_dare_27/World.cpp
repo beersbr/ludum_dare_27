@@ -25,6 +25,8 @@ void World::render()
 		glVertex3f(0.0f, -10.0f, 0.0f);
 	glEnd();
 
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glColor3f(1.0f, 1.0f, 1.0f);
 	for(int z = 0; z < height-1; ++z)
 	{
@@ -36,11 +38,25 @@ void World::render()
 		}
 		glEnd();
 	}
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	std::vector<Entity*>::iterator it = entities.begin();
+	for(it; it != entities.end(); ++it)
+	{
+		(*it)->render();
+	}
+
 }
 
 void World::update()
 {
 	player->update(this);
+
+	std::vector<Entity*>::iterator it = entities.begin();
+	for(it; it != entities.end(); ++it)
+	{
+
+	}
 }
 
 void World::generateMap(int w, int h)
@@ -48,13 +64,13 @@ void World::generateMap(int w, int h)
 	width = w;
 	height = h;
 
-	//// using normal form of line
+	// using normal form of line
 	//float max_c = sqrt(w*w + h*h)/2;
 	//srand(SDL_GetTicks());
 
 	//std::vector<std::tuple<float, float>> lines;
 
-	//for(int i = 0; i < 500; ++i)
+	//for(int i = 0; i < 800; ++i)
 	//{
 	//	float a = rand();
 	//	float c = (frand() * max_c - max_c/2);
@@ -87,9 +103,9 @@ void World::generateMap(int w, int h)
 	//		for(int x = 0; x < width; ++x)
 	//		{
 	//			if(a*(x-(width/2)) + b*(y-(height/2)) - c > 0)
-	//				terrain[y][x] += 0.05f;
+	//				terrain[y][x] += 0.25f;
 	//			else
-	//				terrain[y][x] -= 0.05f;
+	//				terrain[y][x] -= 0.25f;
 	//		}
 	//	}
 	//}
