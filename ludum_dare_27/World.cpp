@@ -21,9 +21,17 @@ void World::render()
 	GLfloat LightAmbient[]= { 0.5f, 0.5f, 0.5f, 1.0f }; 
 	GLfloat LightDiffuse[]= { 1.0f, 1.0f, 1.0f, 1.0f }; 
 	GLfloat LightPosition[]= { 0.0f, 15.0f, 0.0f, 1.0f }; 
+	//GLfloat LightPosition1[]= { 0.0f, 15.0f, -10.0f, 1.0f }; 
+
+	GLfloat LightAmbient1[]= { 1.0f, 1.0f, 1.0f, 1.0f }; 
+	GLfloat LightDiffuse1[]= { 0.2f, 0.2f, 0.2f, 1.0f }; 
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, LightAmbient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, LightDiffuse);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient1);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse1);
+
+	glBindTexture(0, 0);
 
 	player->render();
 
@@ -54,7 +62,14 @@ void World::render()
 		(*it)->render();
 	}
 
+	GLfloat LightPosition1[4];
+	LightPosition1[0] = player->pos.x;
+	LightPosition1[1] = player->pos.y;
+	LightPosition1[2] = player->pos.z;
+	LightPosition1[3] = 1.0f;
+
 	glLightfv(GL_LIGHT0, GL_POSITION, LightPosition);
+	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition1);
 
 }
 

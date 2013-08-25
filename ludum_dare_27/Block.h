@@ -2,8 +2,13 @@
 
 #include "Helper.h"
 #include "Entity.h"
+
 #include <SDL.h>
 #include <SDL_opengl.h>
+#include <glut.h>
+#include <gl/GL.h>
+
+#include "Resources.h"
 
 class Block : public Entity
 {

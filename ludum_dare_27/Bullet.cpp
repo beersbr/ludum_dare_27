@@ -2,7 +2,7 @@
 
 Bullet::Bullet(void)
 {
-	speed = 0.6;
+	speed = 0.4;
 }
 
 Bullet::~Bullet()
@@ -18,7 +18,7 @@ Bullet::Bullet(Vector pos, Vector dir)
 	size.y = 0.2;
 	size.z = 0.2;
 
-	speed = 0.6;
+	speed = 0.4;
 }
 
 void Bullet::update(void* world)

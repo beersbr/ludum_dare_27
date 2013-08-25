@@ -9,14 +9,18 @@ class Resources
 public:
 	static Resources* instance();
 
-	void createPngResource(std::string path, std::string tag);
-	FIBITMAP* getResource(std::string tag);
-	BYTE* getOpenGLTExture(std::string tag);
+	void createPngResource(std::string path, int id);
+	FIBITMAP* getResource(int id);
+	BYTE* getBytesFromResource(int id);
+
+public:
+	unsigned int textures[16];
 
 private:
 	Resources(void);
 	static Resources* instance_;
 
-	std::map<std::string, FIBITMAP*> resources;
+	std::map<int, FIBITMAP*> resources;
+
 };
 

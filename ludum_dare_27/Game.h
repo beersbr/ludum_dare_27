@@ -2,6 +2,7 @@
 
 #include "World.h"
 #include "Controller.h"
+#include "Resources.h"
 
 #include "Player.h"
 #include "Block.h"

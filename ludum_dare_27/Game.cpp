@@ -176,6 +176,26 @@ void Game::run()
 
 	startTime = SDL_GetTicks();
 
+	Resources::instance()->createPngResource("images/dirt.png", DIRT);
+	BYTE* image = Resources::instance()->getBytesFromResource(DIRT);
+	glGenTextures(3, &Resources::instance()->textures[0]);
+
+	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[0]);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+
+	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[1]);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+
+	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[2]);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);
+	gluBuild2DMipmaps(GL_TEXTURE_2D, 3, 32, 32, GL_RGBA, GL_UNSIGNED_BYTE, image);
+
+
 	world = new World();
 	world->generateMap(250, 250);
 
