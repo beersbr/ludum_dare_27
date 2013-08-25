@@ -15,7 +15,7 @@ Controller::Controller(void)
 {
 	keyStatus.clear();
 	mouseDidMove = false;
-	mouseSpeed = 0.03f;
+	mouseSpeed = 0.015f;
 }
 
 void Controller::onKeyDown(short keyCode)

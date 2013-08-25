@@ -61,6 +61,36 @@ void Player::update(void* w)
 				}
 			}
 
+			if(Controller::instance()->isKeyDown(SDL_SCANCODE_W))
+			{
+				Vector v = direction.toUnit();
+				v.y = 0;
+				vel += v*(accSpeed/4);
+			}
+			if(Controller::instance()->isKeyDown(SDL_SCANCODE_S))
+			{
+				Vector v = direction.toUnit();
+				v.y = 0;
+				vel -= v*(accSpeed/4);
+			}
+			if(Controller::instance()->isKeyDown(SDL_SCANCODE_A))
+			{
+				// strafe
+				Vector v = direction.toUnit();
+				v.y = 0;
+				v = v.rotate(VECTOR_AXIS_Y, PI/2);
+				vel -= v*(accSpeed/4);
+
+			}
+			if(Controller::instance()->isKeyDown(SDL_SCANCODE_D))
+			{
+				// strafe
+				Vector v = direction.toUnit();
+				v.y = 0;
+				v = v.rotate(VECTOR_AXIS_Y, PI/2);
+				vel += v*(accSpeed/4);
+			}
+
 			// check intersection with terrain
 			if(pos.x < (world->width/2) && pos.x >= (-world->width/2)
 				&& pos.z < (world->height/2) && pos.z >= (-world->height/2))
@@ -238,6 +268,10 @@ void Player::update(void* w)
 	std::vector<Entity*>::iterator it = world->entities.begin();
 	for(it; it != world->entities.end(); ++it)
 	{
+		bool top = false;
+
+		// TODO: make sure gravity is always working....
+
 		if(Entity::colliding(this, *it))
 		{
 			// TODO: collision is happening...
@@ -266,7 +300,9 @@ void Player::update(void* w)
 				vel.y = 0;
 
 				if(SIGN(d.y) > 0)
+				{
 					playerState = ISRUNNING;
+				}
 			}
 			if(abs_dist.z < abs_dist.y && abs_dist.z < abs_dist.x)
 			{
@@ -274,13 +310,13 @@ void Player::update(void* w)
 				pos += dist*(SIGN(d.z)*-1);
 				vel.z = 0;
 			}
+
 		}
 		else
 		{
 			((Block*)(*it))->setColliding(false);
 		}
 	}
-
 
 	camera.pos = pos;
 	camera.pos.y += 2.3f;

@@ -187,6 +187,18 @@ Vector& Vector::operator/=(const float s)
     return *this;
 }
 
+const Vector Vector::operator|(const Vector& v) const
+{
+	Vector r = Vector((int)x | (int)v.x, (int)y | (int)v.y, (int)z | (int)v.z);
+	return r;
+}
+
+const Vector Vector::operator&(const Vector& v) const
+{
+	Vector r = Vector((int)x & (int)v.x, (int)y & (int)v.y, (int)z & (int)v.z);
+	return r;
+}
+
 float Vector::magnitude() const
 {
     return (sqrtf(x*x + y*y + z*z));

@@ -52,6 +52,9 @@ public:
     Vector& operator*=(const float s);
     Vector& operator/=(const float s);
 
+	const Vector operator|(const Vector& v) const;
+	const Vector operator&(const Vector& v) const;
+
     float magnitude() const;
 
     // creates a new vector representing the unit vector of the given Vector
