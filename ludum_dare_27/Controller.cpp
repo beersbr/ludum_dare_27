@@ -26,6 +26,7 @@ void Controller::onKeyDown(short keyCode)
 void Controller::onKeyUp(short keyCode)
 {
 	keyStatus[keyCode] = false;
+	keyPressed[keyCode] = true;
 }
 
 void Controller::onMouseMove(int offx, int offy, int mX, int mY)
@@ -40,6 +41,16 @@ void Controller::onMouseMove(int offx, int offy, int mX, int mY)
 bool Controller::isKeyDown(short keyCode)
 {
 	return keyStatus[keyCode];
+}
+
+bool Controller::isKeyPressed(short keyCode)
+{
+	return keyPressed[keyCode];
+}
+
+void Controller::resetKeyPressed()
+{
+	keyPressed.clear();
 }
 
 int Controller::offsetX()

@@ -14,6 +14,9 @@ public:
 	void onMouseMove(int offX, int offY, int mX, int mY);
 
 	bool isKeyDown(short keyCode);
+	bool isKeyPressed(short keyCode);
+
+	void resetKeyPressed();
 
 	int offsetX();
 	int offsetY();
@@ -39,6 +42,7 @@ private:
 	float mouseSpeed;
 
 	std::map<short, bool> keyStatus;
+	std::map<short, bool> keyPressed;
 
 	static Controller* _instance;
 };

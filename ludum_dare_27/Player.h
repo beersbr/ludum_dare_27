@@ -13,6 +13,7 @@ enum PLAYER_STATE {
 	ISJUMPING,
 	ISRUNNING,
 	ISFREECAM,
+	ISFALLING
 };
 
 class Player : public Entity
@@ -29,9 +30,12 @@ public:
 
 	Camera camera;
 	Vector direction;
+	Vector jumpVector;
+	Vector force;
 
 	float accSpeed;
 	float friction;
 
+	float mass;
 
 };

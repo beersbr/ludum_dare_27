@@ -70,7 +70,7 @@ void Game::init_gl()
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	gluPerspective(50.0f, ratio, 0.1f, 500.0f);
+	gluPerspective(50.0f, ratio, 0.1f, 1500.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();	
 }
@@ -80,7 +80,6 @@ void Game::render()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -102,6 +101,8 @@ void Game::update()
 void Game::handleEvents()
 {
 	Controller::instance()->resetMouseMoved();
+	Controller::instance()->resetKeyPressed();
+
 	while(SDL_PollEvent(&event))
 	{
 		switch(event.type)
@@ -163,7 +164,9 @@ void Game::run()
 	startTime = SDL_GetTicks();
 
 	world = new World();
-	world->generateMap(500, 500);
+	world->generateMap(250, 250);
+
+	world->gravity = Vector(0.0f, -0.03f, 0.0f);
 
 	world->player = new Player();
 	((Player*)(world->player))->playerState = ISFREECAM;

@@ -18,7 +18,7 @@ Player::Player(void)
 	camera.target = pos + direction*10;
 
 	accSpeed = 0.05;
-	friction = 0.85;
+	friction = 0.86;
 }
 
 Player::~Player(void)
@@ -33,45 +33,134 @@ void Player::update(void* w)
 	{
 		case ISJUMPING:
 		{
-			if(Controller::instance()->isKeyDown(SDL_SCANCODE_F))
+			if(Controller::instance()->isKeyPressed(SDL_SCANCODE_8))
 				playerState = ISFREECAM;
 
-			if(Controller::instance()->isKeyDown(SDL_SCANCODE_W))
+			if(Controller::instance()->mouseMoved())
 			{
+				float offsetX = Controller::instance()->offsetX();
+				float offsetY = Controller::instance()->offsetY();
+
+				if(offsetY != 0.0)
+				{ 
+					Vector v = Vector(direction.x, 0, direction.z);
+					v = v.toUnit();
+					v = v.rotate(VECTOR_AXIS_Y, PI/2);
+
+					direction = direction.rotate(v, SIGN(offsetY) * (Controller::instance()->getMouseSpeed() * fabs(offsetY)));
+				}
+
+				if(offsetX != 0.0)
+				{
+					direction = direction.rotate(VECTOR_AXIS_Y, SIGN(offsetX) * (Controller::instance()->getMouseSpeed() * fabs(offsetX)));
+
+				}
 			}
-			if(Controller::instance()->isKeyDown(SDL_SCANCODE_S))
+
+			// check intersection with terrain
+			if(pos.x < (world->width/2) && pos.x >= (-world->width/2)
+				&& pos.z < (world->height/2) && pos.z >= (-world->height/2))
 			{
+				float y = world->terrain[(int)pos.x+(world->width/2)][(int)pos.z+(world->height/2)];
+
+				if((pos.y + vel.y) < y)
+				{
+					pos.y = y;
+					vel.y = 0;
+					playerState = ISRUNNING;
+				}
+				else
+					vel += world->gravity;
 			}
-			if(Controller::instance()->isKeyDown(SDL_SCANCODE_A))
-			{
-			}
-			if(Controller::instance()->isKeyDown(SDL_SCANCODE_D))
-			{
-			}
+			else
+				vel += world->gravity;
 
 			break;
 		}
 		case ISRUNNING:
 		{
-			if(Controller::instance()->isKeyDown(SDL_SCANCODE_F))
+			if(Controller::instance()->isKeyPressed(SDL_SCANCODE_8))
 				playerState = ISFREECAM;
+
+			if(Controller::instance()->mouseMoved())
+			{
+				float offsetX = Controller::instance()->offsetX();
+				float offsetY = Controller::instance()->offsetY();
+
+				if(offsetY != 0.0)
+				{ 
+					Vector v = Vector(direction.x, 0, direction.z);
+					v = v.toUnit();
+					v = v.rotate(VECTOR_AXIS_Y, PI/2);
+
+					direction = direction.rotate(v, SIGN(offsetY) * (Controller::instance()->getMouseSpeed() * fabs(offsetY)));
+				}
+
+				if(offsetX != 0.0)
+				{
+					direction = direction.rotate(VECTOR_AXIS_Y, SIGN(offsetX) * (Controller::instance()->getMouseSpeed() * fabs(offsetX)));
+
+				}
+			}
 
 			if(Controller::instance()->isKeyDown(SDL_SCANCODE_W))
 			{
+				Vector v = direction.toUnit();
+				v.y = 0;
+				vel += v*accSpeed;
 			}
 			if(Controller::instance()->isKeyDown(SDL_SCANCODE_S))
 			{
+				Vector v = direction.toUnit();
+				v.y = 0;
+				vel -= v*accSpeed;
 			}
 			if(Controller::instance()->isKeyDown(SDL_SCANCODE_A))
 			{
+				// strafe
+				Vector v = direction.toUnit();
+				v.y = 0;
+				v = v.rotate(VECTOR_AXIS_Y, PI/2);
+				vel -= v*accSpeed;
+
 			}
 			if(Controller::instance()->isKeyDown(SDL_SCANCODE_D))
 			{
+				// strafe
+				Vector v = direction.toUnit();
+				v.y = 0;
+				v = v.rotate(VECTOR_AXIS_Y, PI/2);
+				vel += v*accSpeed;
 			}
+
+			if(Controller::instance()->isKeyDown(SDL_SCANCODE_SPACE))
+			{
+				vel.y += 0.5;
+				playerState = ISJUMPING;
+			}
+
+			// check intersection with terrain
+			if(pos.x < (world->width/2) && pos.x >= (-world->width/2)
+				&& pos.z < (world->height/2) && pos.z >= (-world->height/2))
+			{
+
+				float y = world->terrain[(int)pos.x+(world->width/2)][(int)pos.z+(world->height/2)];
+
+			}
+			else
+				vel += world->gravity;
+
+			vel.x *= friction;
+			vel.z *= friction;
+
 			break;
 		}
 		case ISFREECAM:
 		{
+			if(Controller::instance()->isKeyPressed(SDL_SCANCODE_9))
+				playerState = ISJUMPING;
+
+
 			if(Controller::instance()->mouseMoved())
 			{
 				float offsetX = Controller::instance()->offsetX();
@@ -98,14 +187,14 @@ void Player::update(void* w)
 				Vector v = Vector(direction);
 				v.toUnit();
 				
-				acc += v*accSpeed;
+				vel += v*accSpeed;
 			}
 			if(Controller::instance()->isKeyDown(SDL_SCANCODE_S))
 			{
 				Vector v = Vector(direction);
 				v.toUnit();
 				
-				acc -= v*accSpeed;
+				vel -= v*accSpeed;
 			}
 			if(Controller::instance()->isKeyDown(SDL_SCANCODE_A))
 			{
@@ -113,7 +202,7 @@ void Player::update(void* w)
 				v = v.toUnit();
 				v = v.rotate(VECTOR_AXIS_Y, PI/2);
 
-				acc -= (v*accSpeed);
+				vel -= (v*accSpeed);
 			}
 			if(Controller::instance()->isKeyDown(SDL_SCANCODE_D))
 			{
@@ -121,26 +210,32 @@ void Player::update(void* w)
 				v = v.toUnit();
 				v = v.rotate(VECTOR_AXIS_Y, PI/2);
 
-				acc += (v*accSpeed);
+				vel += (v*accSpeed);
 			}
+			if(Controller::instance()->isKeyDown(SDL_SCANCODE_SPACE))
+			{
+				vel.y += accSpeed;
+			}
+			if(Controller::instance()->isKeyDown(SDL_SCANCODE_LSHIFT))
+			{
+				vel.y -= accSpeed;
+			}
+
+			vel *= friction;
+
 			break;
 		}
 	}
 
-	vel += acc;
-	acc *= friction;
-	vel *= friction;
-
 	pos += vel;
 
 	camera.pos = pos;
+	camera.pos.y += 2.3f;
 	camera.direction = direction;
-	camera.target = pos + direction*10; // pos - camera.direction*10;
+	camera.target = camera.pos + camera.direction*10; // pos - camera.direction*10;
 }
 
 void Player::render()
 {
 	camera.update();
 }
-
-

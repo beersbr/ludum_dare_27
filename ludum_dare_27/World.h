@@ -1,9 +1,13 @@
 #pragma once
 
+#include "Helper.h"
 #include "Entity.h"
+#include "Vector.h"
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <vector>
+
+#include <tuple>
 
 class World
 {
@@ -23,4 +27,9 @@ public:
 	float** terrain;
 	int width;
 	int height;
+
+	Vector gravity;
+
+private:
+
 };
