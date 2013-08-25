@@ -176,25 +176,35 @@ void Game::run()
 
 	startTime = SDL_GetTicks();
 
-	Resources::instance()->createPngResource("images/dirt.png", DIRT);
-	BYTE* image = Resources::instance()->getBytesFromResource(DIRT);
-	glGenTextures(3, &Resources::instance()->textures[0]);
+ 	Resources::instance()->createPngResource("images/dirt.png", RC_DIRT);
+	BYTE* image = Resources::instance()->getBytesFromResource(RC_DIRT);
+	glGenTextures(1, &Resources::instance()->textures[0]);
 
-	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[0]);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[RC_DIRT]);
+ 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_BGRA, GL_UNSIGNED_BYTE, image);
 
-	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[1]);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	//glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[1]);
+	//glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 
-	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[2]);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);
-	gluBuild2DMipmaps(GL_TEXTURE_2D, 3, 32, 32, GL_RGBA, GL_UNSIGNED_BYTE, image);
+	//glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[2]);
+	//glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	//glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);
+	//gluBuild2DMipmaps(GL_TEXTURE_2D, 3, 32, 32, GL_RGBA, GL_UNSIGNED_BYTE, image);
 
+	Resources::instance()->createPngResource("images/grass.png", RC_GRASS);
+	image = Resources::instance()->getBytesFromResource(RC_GRASS);
+	glGenTextures(1, &Resources::instance()->textures[RC_GRASS]);
+
+	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[RC_GRASS]);
+ 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_BGRA, GL_UNSIGNED_BYTE, image);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	world = new World();
 	world->generateMap(250, 250);
@@ -204,16 +214,17 @@ void Game::run()
 	world->player = new Player();
 	((Player*)(world->player))->playerState = ISFREECAM;
 
-	world->entities.push_back(new Block(Vector(0, -1, 0), Vector(100, 2, 100)));
-	world->entities.push_back(new Block(Vector(0, 1, 0), Vector(2, 2, 2)));
-	world->entities.push_back(new Block(Vector(2, 3, 0), Vector(2, 2, 2)));
-	world->entities.push_back(new Block(Vector(4, 5, 0), Vector(2, 2, 2)));
-	world->entities.push_back(new Block(Vector(6, 7, 0), Vector(2, 2, 2)));
+	world->entities.push_back(new Block(Vector(0, -1, 0), Vector(100, 2, 100), RC_GRASS));
 
-	world->entities.push_back(new Block(Vector(0, 1, 0), Vector(2, 2, 2)));
-	world->entities.push_back(new Block(Vector(0, 3, 2), Vector(2, 2, 2)));
-	world->entities.push_back(new Block(Vector(0, 3, 4), Vector(2, 2, 2)));
-	world->entities.push_back(new Block(Vector(0, 3, 6), Vector(2, 2, 2)));
+	world->entities.push_back(new Block(Vector(0, 1, 0), Vector(2, 2, 2), RC_DIRT));
+	world->entities.push_back(new Block(Vector(2, 3, 0), Vector(2, 2, 2), RC_DIRT));
+	world->entities.push_back(new Block(Vector(4, 5, 0), Vector(2, 2, 2), RC_DIRT));
+	world->entities.push_back(new Block(Vector(6, 7, 0), Vector(2, 2, 2), RC_DIRT));
+
+	world->entities.push_back(new Block(Vector(0, 1, 0), Vector(2, 2, 2), RC_DIRT));
+	world->entities.push_back(new Block(Vector(0, 3, 2), Vector(2, 2, 2), RC_DIRT));
+	world->entities.push_back(new Block(Vector(0, 3, 4), Vector(2, 2, 2), RC_DIRT));
+	world->entities.push_back(new Block(Vector(0, 3, 6), Vector(2, 2, 2), RC_DIRT));
 
 	while(gamestate == RUNNING)
 	{

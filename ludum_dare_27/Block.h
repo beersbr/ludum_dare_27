@@ -14,7 +14,7 @@ class Block : public Entity
 {
 public:
 	Block(void);
-	Block(const Vector p, const Vector size);
+	Block(const Vector p, const Vector size, int type = 0);
 	~Block(void);
 
 	virtual void update(void* world);
@@ -23,4 +23,5 @@ public:
 
 public:
 	Vector color;
+	int bType;
 };

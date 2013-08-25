@@ -4,5 +4,6 @@
 #define frand() ((float)rand()/(float)RAND_MAX)
 
 enum RESOURCE_ID {
-	DIRT
+	RC_DIRT = 1,
+	RC_GRASS
 };
