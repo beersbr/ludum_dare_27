@@ -26,7 +26,7 @@ public:
 	bool isKeyPressed(short keyCode);
 
 	bool isMouseButtonDown(short button);
-	bool isMouseBUttonPressed(short button);
+	bool isMouseButtonPressed(short button);
 
 	void resetKeyPressed();
 

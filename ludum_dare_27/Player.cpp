@@ -7,8 +7,8 @@ Player::Player(void)
 	direction.z = -1;
 
 	pos.x = 0;
-	pos.y = 10;
-	pos.z = 100;
+	pos.y = 0;
+	pos.z = 10;
 
 	lightPos = pos;
 	lightPos.y += 0.5;
@@ -23,9 +23,9 @@ Player::Player(void)
 	accSpeed = 0.05;
 	friction = 0.86;
 
-	size.x = 1.2;
-	size.z = 1.2;
-	size.y = 2.8;
+	size.x = 2.2;
+	size.z = 2.2;
+	size.y = 4.5;
 }
 
 Player::~Player(void)
@@ -55,11 +55,13 @@ void Player::update(void* w)
 					v = v.rotate(VECTOR_AXIS_Y, PI/2);
 
 					direction = direction.rotate(v, SIGN(offsetY) * (Controller::instance()->getMouseSpeed() * fabs(offsetY)));
+					direction = direction.toUnit();
 				}
 
 				if(offsetX != 0.0)
 				{
 					direction = direction.rotate(VECTOR_AXIS_Y, SIGN(offsetX) * (Controller::instance()->getMouseSpeed() * fabs(offsetX)));
+					direction = direction.toUnit();
 
 				}
 			}
@@ -131,11 +133,13 @@ void Player::update(void* w)
 					v = v.rotate(VECTOR_AXIS_Y, PI/2);
 
 					direction = direction.rotate(v, SIGN(offsetY) * (Controller::instance()->getMouseSpeed() * fabs(offsetY)));
+					direction = direction.toUnit();
 				}
 
 				if(offsetX != 0.0)
 				{
 					direction = direction.rotate(VECTOR_AXIS_Y, SIGN(offsetX) * (Controller::instance()->getMouseSpeed() * fabs(offsetX)));
+					direction = direction.toUnit();
 
 				}
 			}
@@ -217,11 +221,13 @@ void Player::update(void* w)
 					v = v.rotate(VECTOR_AXIS_Y, PI/2);
 
 					direction = direction.rotate(v, SIGN(offsetY) * (Controller::instance()->getMouseSpeed() * fabs(offsetY)));
+					direction = direction.toUnit();
 				}
 
 				if(offsetX != 0.0)
 				{
 					direction = direction.rotate(VECTOR_AXIS_Y, SIGN(offsetX) * (Controller::instance()->getMouseSpeed() * fabs(offsetX)));
+					direction = direction.toUnit();
 
 				}
 			}
@@ -269,6 +275,14 @@ void Player::update(void* w)
 
 			break;
 		}
+	}
+
+	if(Controller::instance()->isMouseButtonPressed(1))
+	{
+		Vector p = pos;
+		p.y += 2.3;
+		p += direction*3;
+		world->entities.push_back(new Bullet(p, direction));
 	}
 
 	pos += vel;
@@ -331,7 +345,8 @@ void Player::update(void* w)
 	camera.pos = pos;
 	camera.pos.y += 2.3f;
 	camera.direction = direction;
-	camera.target = camera.pos + camera.direction*10; // pos - camera.direction*10;
+	camera.target = camera.pos + camera.direction*15; // pos - camera.direction*10;
+
 }
 
 void Player::render()

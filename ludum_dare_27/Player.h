@@ -6,6 +6,7 @@
 #include "Controller.h"
 #include "World.h"
 #include "Block.h"
+#include "Bullet.h"
 
 #include <SDL.h>
 

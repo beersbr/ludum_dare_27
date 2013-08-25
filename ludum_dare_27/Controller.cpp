@@ -54,7 +54,7 @@ bool Controller::isMouseButtonDown(short button)
 	return mouseStatus[button];
 }
 
-bool Controller::isMouseBUttonPressed(short button)
+bool Controller::isMouseButtonPressed(short button)
 {
 	return mousePressed[button];
 }

@@ -65,7 +65,7 @@ void World::update()
 	std::vector<Entity*>::iterator it = entities.begin();
 	for(it; it != entities.end(); ++it)
 	{
-
+		(*it)->update(this);
 	}
 }
 

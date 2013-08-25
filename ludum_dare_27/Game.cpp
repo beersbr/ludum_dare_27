@@ -104,6 +104,7 @@ void Game::handleEvents()
 {
 	Controller::instance()->resetMouseMoved();
 	Controller::instance()->resetKeyPressed();
+	Controller::instance()->resetMouseClicks();
 
 	while(SDL_PollEvent(&event))
 	{
@@ -131,12 +132,12 @@ void Game::handleEvents()
 			}
 			case SDL_MOUSEBUTTONDOWN:
 			{
-				Controller::instance()->onMouseClick(event.button.button, event.button.x, event.button.y);
+				Controller::instance()->onMouseDown(event.button.button, event.button.x, event.button.y);
 				break;
 			}
 			case SDL_MOUSEBUTTONUP:
 			{
-				Controller::instance()->onMouseClick(event.button.button, event.button.x, event.button.y);
+				Controller::instance()->onMouseUp(event.button.button, event.button.x, event.button.y);
 				break;
 			}
 			case SDL_WINDOWEVENT:
@@ -188,6 +189,11 @@ void Game::run()
 	world->entities.push_back(new Block(Vector(2, 3, 0), Vector(2, 2, 2)));
 	world->entities.push_back(new Block(Vector(4, 5, 0), Vector(2, 2, 2)));
 	world->entities.push_back(new Block(Vector(6, 7, 0), Vector(2, 2, 2)));
+
+	world->entities.push_back(new Block(Vector(0, 1, 0), Vector(2, 2, 2)));
+	world->entities.push_back(new Block(Vector(0, 3, 2), Vector(2, 2, 2)));
+	world->entities.push_back(new Block(Vector(0, 3, 4), Vector(2, 2, 2)));
+	world->entities.push_back(new Block(Vector(0, 3, 6), Vector(2, 2, 2)));
 
 	while(gamestate == RUNNING)
 	{
