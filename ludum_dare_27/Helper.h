@@ -8,7 +8,8 @@
 enum RESOURCE_ID {
 	RC_DIRT = 1,
 	RC_GRASS,
-	RC_SHADE
+	RC_SHADE,
+	RC_ENEMY
 };
 
 enum GAME_OBJECT_STATES {
@@ -23,5 +24,6 @@ struct ActionState
 	Vector pos;
 	Vector dir;
 	Vector vel;
+	bool shoot;
 
 };

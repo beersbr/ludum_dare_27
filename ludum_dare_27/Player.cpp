@@ -286,6 +286,7 @@ void Player::update(void* w)
 		}
 	}
 
+	bool didShoot = false;
 	if(Controller::instance()->isMouseButtonPressed(1))
 	{
 		Vector p = pos;
@@ -293,6 +294,7 @@ void Player::update(void* w)
 		p += direction*3;
 		Bullet* b = new Bullet(p, direction);
 		world->entities.push_front(b);
+		didShoot = true;
 	}
 
 	pos += vel;
@@ -352,7 +354,7 @@ void Player::update(void* w)
 		}
 	}
 
-	ActionState a = { SDL_GetTicks(), pos, direction, vel };
+	ActionState a = { SDL_GetTicks(), pos, direction, vel, didShoot};
 	record.push_back(a);
 
 	camera.pos = pos;

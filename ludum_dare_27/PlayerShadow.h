@@ -2,6 +2,7 @@
 #include "entity.h"
 #include "World.h"
 #include "Resources.h"
+#include "Bullet.h"
 
 #include <stack>
 

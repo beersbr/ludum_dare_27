@@ -44,6 +44,12 @@ void PlayerShadow::update(void* w)
 
 			pos = as.pos;
 			vel = as.vel;
+			direction = as.dir;
+	
+			if(as.shoot)
+			{
+				world->entities.push_back(new Bullet(pos+(direction*3), direction));
+			}
 
 			break;
 		}

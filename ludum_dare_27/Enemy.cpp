@@ -1,116 +1,132 @@
-#include "Bullet.h"
+#include "Enemy.h"
 
-Bullet::Bullet(void)
+
+Enemy::Enemy(void)
 {
-	speed = 0.4;
+	bType = RC_ENEMY;
 	state = ALIVE;
+	hp = 10;
+
+	size.x = 2.2;
+	size.z = 2.2;
+	size.y = 4.5;
 }
 
-Bullet::~Bullet()
+Enemy::Enemy(Vector p)
 {
-}
-
-Bullet::Bullet(Vector pos, Vector dir)
-{
-	direction = dir.toUnit();
-	this->pos = pos;
-
-	size.x = 0.2;
-	size.y = 0.2;
-	size.z = 0.2;
-
-	speed = 0.95;
+	bType = RC_ENEMY;
 	state = ALIVE;
-	vel = direction * speed;
+	hp = 10;
+
+	pos = p;
+
+	size.x = 2.2;
+	size.z = 2.2;
+	size.y = 4.5;
 }
 
-void Bullet::update(void* w)
+Enemy::~Enemy(void)
 {
-	World* world = (World*)w;
 
-	int size = world->entities.size();
-
-	switch(state)
-	{
-		case ALIVE:
-		{
-			pos += vel;
-
-			std::list<Entity*>::iterator it = world->entities.begin();
-			for(it; it != world->entities.end(); it++)
-			{
-				if(this == *it) 
-					continue;
-
-				if(pos.x < -500 || pos.x > 500 || 
-					pos.y < -500 || pos.y > 500 ||
-					pos.z < -500 || pos.z > 500)
-						state = DYING;
-
-				if(Entity::colliding(this, (*it)))
-				{
-					state = DYING;
-					pos -= vel;
-					break;
-				}
-			}
-			break;
-		}
-		case DYING:
-		{
-			onDie();
-			break;
-		}
-	}	
-
-	// CHECK COLLSISION;
 }
 
-void Bullet::render()
+void Enemy::update(void* w)
 {
+
+}
+
+void Enemy::onDie()
+{
+
+}
+
+void Enemy::render()
+{
+	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[bType]); 
+
 	glBegin(GL_TRIANGLES);
 
 	// front
 	glNormal3f(0, 0, 1);
+
+	glTexCoord2f(size.x/2.0f, size.y/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
+	glTexCoord2f(0.0, size.y/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
+	glTexCoord2f(size.x/2.0f, 0.0);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
 
 	glNormal3f(0, 0, 1);
+
+	glTexCoord2f(0.0f, size.y/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
+	glTexCoord2f(0.0, 0.0);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
+	glTexCoord2f(size.x/2.0f, 0.0);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
 
+
+	// left
 	glNormal3f(-1, 0, 0);
+
+	glTexCoord2f(size.y/2.0f, size.z/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
+	glTexCoord2f(size.y/2.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
+	glTexCoord2f(0.0f, size.z/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
 
 	glNormal3f(-1, 0, 0);
+
+	glTexCoord2f(0.0f, size.z/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
+	glTexCoord2f(size.y/2.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
+	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
 
+
+	// back
 	glNormal3f(0, 0, -1);
+
+	glTexCoord2f(size.x/2.0f, size.y/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
+	glTexCoord2f(size.x/2.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
+	glTexCoord2f(0.0f, size.y/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
 
 	glNormal3f(0, 0, -1);
+
+	glTexCoord2f(0.0f, size.y/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
+	glTexCoord2f(size.x/2.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
+	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
 
+
+	// right
 	glNormal3f(1, 0, 0);
+
+	glTexCoord2f(size.y/2.0f, size.z/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
+	glTexCoord2f(0.0f, size.z/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
+	glTexCoord2f(size.y/2.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
 
 	glNormal3f(1, 0, 0);
+
+	glTexCoord2f(size.y/2.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
+	glTexCoord2f(0.0f, size.z/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
+	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
 
+
+	// bottom
 	glNormal3f(0, -1, 0);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
@@ -122,23 +138,25 @@ void Bullet::render()
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
 
 	glNormal3f(0, 1, 0);
+
+
+	// top
+	glTexCoord2f(0.0f, (size.z/2.0f));
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
+	glTexCoord2f(size.x/2.0f, size.z/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
+	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
 
 	glNormal3f(0, 1, 0);
+
+	glTexCoord2f(size.x/2.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
+	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
+	glTexCoord2f(size.x/2.0f, size.z/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
+	
 	glEnd();
-}
-
-void Bullet::setSpeed(float s)
-{
-	speed = s;
-}
-
-void Bullet::onDie()
-{
-	state = DEAD;
+	glBindTexture(GL_TEXTURE_2D, 0);
 }

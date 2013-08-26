@@ -6,6 +6,7 @@
 
 #include "Player.h"
 #include "Block.h"
+#include "Enemy.h"
 
 #include <SDL.h>
 #include <SDL_opengl.h>

@@ -55,6 +55,7 @@ void Game::init_gl()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClearDepth(1.0f);
 
+	gluOrtho2D(-100, 100, -100, 100);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_PROGRAM_POINT_SIZE);
 	glEnable(GL_CULL_FACE);
@@ -88,6 +89,43 @@ void Game::render()
 	glLoadIdentity();
 
 	world->render();
+
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+
+	gluOrtho2D(-100, 100, -100, 100);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glDisable(GL_DEPTH_TEST);
+	//glDisable(GL_CULL_FACE);
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_LIGHTING);
+	glDepthMask(GL_FALSE);
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+
+	glColor3f(1.0, 1.0f, 1.0f);
+
+	glBegin(GL_LINES);
+		glVertex3f(-1.0f, 0.0f, 0.0f);
+		glVertex3f(1.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, -1.0f, 0.0f);
+		glVertex3f(0.0f, 1.0f, 0.0f);
+	glEnd();
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_LIGHTING);
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+
+	glDepthMask(GL_TRUE);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
 
 	SDL_GL_SwapWindow(pWindow);
 }
@@ -205,6 +243,14 @@ void Game::run()
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_BGRA, GL_UNSIGNED_BYTE, image);
 
+	// shade
+	Resources::instance()->createPngResource("images/red.png", RC_ENEMY);
+	image = Resources::instance()->getBytesFromResource(RC_ENEMY);
+	glGenTextures(1, &Resources::instance()->textures[RC_ENEMY]);
+	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[RC_ENEMY]);
+ 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_BGRA, GL_UNSIGNED_BYTE, image);
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -220,16 +266,6 @@ void Game::run()
 
 	world->entities.push_front(new Block(Vector(0, 5, 0), Vector(4, 4, 4), RC_GRASS));
 
-	//world->entities.push_front(new Block(Vector(0, 1, 0), Vector(2, 2, 2), RC_DIRT));
-	//world->entities.push_front(new Block(Vector(2, 3, 0), Vector(2, 2, 2), RC_DIRT));
-	//world->entities.push_front(new Block(Vector(4, 5, 0), Vector(2, 2, 2), RC_DIRT));
-	//world->entities.push_front(new Block(Vector(6, 7, 0), Vector(2, 2, 2), RC_DIRT));
-
-	//world->entities.push_front(new Block(Vector(0, 1, 0), Vector(2, 2, 2), RC_DIRT));
-	//world->entities.push_front(new Block(Vector(0, 3, 2), Vector(2, 2, 2), RC_DIRT));
-	//world->entities.push_front(new Block(Vector(0, 3, 4), Vector(2, 2, 2), RC_DIRT));
-	//world->entities.push_front(new Block(Vector(0, 3, 6), Vector(2, 2, 2), RC_DIRT));
-
 	world->entities.push_front(new Block(Vector(49, 2, 0), Vector(2, 2, 100), RC_DIRT));
 	world->entities.push_front(new Block(Vector(-49, 2, 0), Vector(2, 2, 100), RC_DIRT));
 
@@ -241,6 +277,8 @@ void Game::run()
 
 	world->entities.push_front(new Block(Vector(0, 6,  49), Vector(100, 2, 2), RC_DIRT));
 	world->entities.push_front(new Block(Vector(0, 6, -49), Vector(100, 2, 2), RC_DIRT));
+
+	world->entities.push_front(new Enemy(Vector(15, 3, 15)));
 
 	while(gamestate == RUNNING)
 	{

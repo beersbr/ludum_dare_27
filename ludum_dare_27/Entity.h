@@ -21,6 +21,7 @@ public:
 	Vector acc; // accelleration
 	Vector vel; // velocity
 	Vector size;
+	Vector direction;
 
 	int state;
 

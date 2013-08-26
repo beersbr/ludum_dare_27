@@ -33,7 +33,6 @@ public:
 	PLAYER_STATE playerState;
 
 	Camera camera;
-	Vector direction;
 	Vector jumpVector;
 	Vector force;
 	Vector lightPos;
