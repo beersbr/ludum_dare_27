@@ -7,3 +7,9 @@ enum RESOURCE_ID {
 	RC_DIRT = 1,
 	RC_GRASS
 };
+
+enum GAME_OBJECT_STATES {
+	ALIVE,
+	DYING,
+	DEAD
+};

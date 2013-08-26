@@ -2,6 +2,8 @@
 
 #include <SDL_opengl.h>
 #include "entity.h"
+#include "World.h"
+
 
 class Bullet :
 	public Entity
@@ -13,6 +15,7 @@ public:
 
 	virtual void update(void* world);
 	virtual void render();
+	virtual void onDie();
 
 	void setSpeed(float s);
 

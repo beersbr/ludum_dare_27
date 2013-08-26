@@ -89,6 +89,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerShadow.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="World.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerShadow.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="World.h" />

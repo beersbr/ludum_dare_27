@@ -26,9 +26,14 @@ bool Entity::colliding(Entity* a, Entity* b)
 		return false;
 
 	return true;
-}
+ }
 
 void Entity::setColliding(bool ic)
+{
+
+}
+
+void Entity::onDie()
 {
 
 }

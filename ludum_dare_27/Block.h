@@ -22,6 +22,5 @@ public:
 	virtual void setColliding(bool ic);
 
 public:
-	Vector color;
 	int bType;
 };

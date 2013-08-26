@@ -56,7 +56,7 @@ void World::render()
 	//}
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	std::vector<Entity*>::iterator it = entities.begin();
+	std::list<Entity*>::iterator it = entities.begin();
 	for(it; it != entities.end(); ++it)
 	{
 		(*it)->render();
@@ -77,10 +77,14 @@ void World::update()
 {
 	player->update(this);
 
-	std::vector<Entity*>::iterator it = entities.begin();
-	for(it; it != entities.end(); ++it)
+	std::list<Entity*>::iterator it = entities.begin();
+	while(it != entities.end())
 	{
-		(*it)->update(this);
+		Entity* e = (*it)++;
+
+		e->update(this);
+		if((*it)->state == DEAD)
+			entities.remove(e);
 	}
 }
 
@@ -136,3 +140,9 @@ void World::generateMap(int w, int h)
 	//}
 
 }
+
+void World::onDie(Entity* e)
+{
+
+}
+

@@ -3,6 +3,7 @@
 Bullet::Bullet(void)
 {
 	speed = 0.4;
+	state = ALIVE;
 }
 
 Bullet::~Bullet()
@@ -18,13 +19,56 @@ Bullet::Bullet(Vector pos, Vector dir)
 	size.y = 0.2;
 	size.z = 0.2;
 
-	speed = 0.4;
+	speed = 0.45;
+	state = ALIVE;
+	vel = direction * speed;
 }
 
-void Bullet::update(void* world)
+void Bullet::update(void* w)
 {
-	vel += direction * speed;
-	pos += vel;
+	World* world = (World*)w;
+
+	int size = world->entities.size();
+
+	switch(state)
+	{
+		case ALIVE:
+		{
+			pos += vel;
+
+			std::list<Entity*>::iterator it = world->entities.begin();
+			for(it; it != world->entities.end(); it++)
+			{
+				if(this == *it) 
+					continue;
+
+				if(pos.x < -1000 || pos.x > 1000)
+					state = DYING;
+
+				if(pos.y < -1000 || pos.y > 1000)
+					state = DYING;
+
+				if(pos.z < -1000 || pos.z > 1000)
+					state = DYING;
+
+				if(Entity::colliding(this, (*it)))
+				{
+					state = DYING;
+					pos -= vel;
+					break;
+				}
+			}
+			break;
+		}
+		case DYING:
+		{
+			onDie();
+			break;
+		}
+	}
+
+
+	
 
 	// CHECK COLLSISION;
 }
@@ -99,4 +143,9 @@ void Bullet::render()
 void Bullet::setSpeed(float s)
 {
 	speed = s;
+}
+
+void Bullet::onDie()
+{
+	state = DEAD;
 }

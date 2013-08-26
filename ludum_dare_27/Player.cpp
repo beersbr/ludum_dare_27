@@ -282,14 +282,15 @@ void Player::update(void* w)
 		Vector p = pos;
 		p.y += 2.3;
 		p += direction*3;
-		world->entities.push_back(new Bullet(p, direction));
+		Bullet* b = new Bullet(p, direction);
+		world->entities.push_front(b);
 	}
 
 	pos += vel;
 
 	//check collision
 	// TODO: hash bucket the entities
-	std::vector<Entity*>::iterator it = world->entities.begin();
+	std::list<Entity*>::iterator it = world->entities.begin();
 	for(it; it != world->entities.end(); ++it)
 	{
 		bool top = false;
@@ -341,6 +342,9 @@ void Player::update(void* w)
 			((Block*)(*it))->setColliding(false);
 		}
 	}
+
+	ActionState a = { SDL_GetTicks(), pos, direction, vel };
+	record.push_back(a);
 
 	camera.pos = pos;
 	camera.pos.y += 2.3f;

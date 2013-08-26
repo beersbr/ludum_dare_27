@@ -10,10 +10,6 @@ Block::Block(const Vector p, const Vector size, int type)
 	pos = p;
 	this->size = size;
 
-	color.x = 0.3f;
-	color.y = 0.3f;
-	color.z = 0.8f;
-
 	bType = type;
 }
 
@@ -35,77 +31,84 @@ void Block::render()
 	// front
 	glNormal3f(0, 0, 1);
 
-	glTexCoord2f(1.0, 1.0);
+	glTexCoord2f(size.x/2.0f, size.y/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
-	glTexCoord2f(0.0, 1.0);
+	glTexCoord2f(0.0, size.y/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
-	glTexCoord2f(1.0, 0.0);
+	glTexCoord2f(size.x/2.0f, 0.0);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
 
 	glNormal3f(0, 0, 1);
 
-	glTexCoord2f(0.0f, 1.0f);
+	glTexCoord2f(0.0f, size.y/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
 	glTexCoord2f(0.0, 0.0);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
-	glTexCoord2f(1.0, 0.0);
+	glTexCoord2f(size.x/2.0f, 0.0);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
 
 
+	// left
 	glNormal3f(-1, 0, 0);
 
-	glTexCoord2f(1.0f, 1.0f);
+	glTexCoord2f(size.y/2.0f, size.z/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
-	glTexCoord2f(1.0f, 0.0f);
+	glTexCoord2f(size.y/2.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
-	glTexCoord2f(0.0f, 1.0f);
+	glTexCoord2f(0.0f, size.z/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
 
 	glNormal3f(-1, 0, 0);
 
-	glTexCoord2f(0.0f, 1.0f);
+	glTexCoord2f(0.0f, size.z/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
-	glTexCoord2f(1.0f, 0.0f);
+	glTexCoord2f(size.y/2.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
 	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
 
+
+	// back
 	glNormal3f(0, 0, -1);
 
-	glTexCoord2f(1.0f, 1.0f);
+	glTexCoord2f(size.x/2.0f, size.y/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
-	glTexCoord2f(1.0f, 0.0f);
+	glTexCoord2f(size.x/2.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
-	glTexCoord2f(0.0f, 1.0f);
+	glTexCoord2f(0.0f, size.y/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
 
 	glNormal3f(0, 0, -1);
 
-	glTexCoord2f(0.0f, 1.0f);
+	glTexCoord2f(0.0f, size.y/2.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
-	glTexCoord2f(1.0f, 0.0f);
+	glTexCoord2f(size.x/2.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
 	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
 
+
+	// right
 	glNormal3f(1, 0, 0);
 
-	glTexCoord2f(1.0f, 1.0f);
+	glTexCoord2f(size.y/2.0f, size.z/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
-	glTexCoord2f(0.0f, 1.0f);
+	glTexCoord2f(0.0f, size.z/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
-	glTexCoord2f(1.0f, 0.0f);
+	glTexCoord2f(size.y/2.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
 
 	glNormal3f(1, 0, 0);
 
-	glTexCoord2f(1.0f, 0.0f);
+	glTexCoord2f(size.y/2.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
-	glTexCoord2f(0.0f, 1.0f);
+	glTexCoord2f(0.0f, size.z/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
 	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
 
+
+	// bottom
 	glNormal3f(0, -1, 0);
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z + (size.z/2));
 	glVertex3f(pos.x - (size.x/2), pos.y - (size.y/2), pos.z - (size.z/2));
@@ -118,20 +121,22 @@ void Block::render()
 
 	glNormal3f(0, 1, 0);
 
-	glTexCoord2f(0.0f, 1.0f);
+
+	// top
+	glTexCoord2f(0.0f, (size.z/2.0f));
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
-	glTexCoord2f(1.0f, 1.0f);
+	glTexCoord2f(size.x/2.0f, size.z/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
 	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
 
 	glNormal3f(0, 1, 0);
 
-	glTexCoord2f(1.0f, 0.0f);
+	glTexCoord2f(size.x/2.0f, 0.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
 	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(pos.x - (size.x/2), pos.y + (size.y/2), pos.z - (size.z/2));
-	glTexCoord2f(1.0f, 1.0f);
+	glTexCoord2f(size.x/2.0f, size.z/2.0f);
 	glVertex3f(pos.x + (size.x/2), pos.y + (size.y/2), pos.z + (size.z/2));
 	
 	glEnd();
@@ -142,8 +147,5 @@ void Block::render()
 
 void Block::setColliding(bool collision)
 {
-	if(collision)
-		color = Vector(1.0f, 1.0f, 1.0f);
-	else
-		color = Vector(0.3f, 0.3f, 0.8f);
+
 }

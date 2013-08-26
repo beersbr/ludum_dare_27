@@ -18,6 +18,15 @@ enum PLAYER_STATE {
 	ISFALLING
 };
 
+struct ActionState
+{
+	double time;
+	Vector pos;
+	Vector dir;
+	Vector vel;
+
+};
+
 class Player : public Entity
 {
 public:
@@ -40,5 +49,7 @@ public:
 	float friction;
 
 	float mass;
+
+	std::vector<ActionState> record;
 
 };

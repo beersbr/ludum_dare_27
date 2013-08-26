@@ -14,11 +14,14 @@ public:
 	static bool colliding(Entity* a, Entity* b);
 
 	virtual void setColliding(bool ic);
+	virtual void onDie();
 
 public:
 	Vector pos; // position
 	Vector acc; // accelleration
 	Vector vel; // velocity
 	Vector size;
+
+	int state;
 
 };

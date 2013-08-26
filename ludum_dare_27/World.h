@@ -6,6 +6,7 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <vector>
+#include <list>
 
 #include <tuple>
 
@@ -20,8 +21,10 @@ public:
 
 	void generateMap(int w, int h);
 
+	void onDie(Entity* e);
+
 public:
-	std::vector<Entity*> entities;
+	std::list<Entity*> entities;
 	Entity* player;
 
 	float** terrain;
