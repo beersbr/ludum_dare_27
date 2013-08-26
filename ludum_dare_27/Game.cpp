@@ -14,11 +14,11 @@ void Game::init()
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		throw COULD_NOT_INIT_SDL;
 
-	//windowWidth = 1280;
-	//windowHeight = 800;
+	windowWidth = 1280;
+	windowHeight = 800;
 
-	windowWidth = 1920;
-	windowHeight = 1080;
+	//windowWidth = 1920;
+	//windowHeight = 1080;
 
 	pWindow = SDL_CreateWindow("Ludum Dare 27 :: 10 Seconds", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 

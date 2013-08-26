@@ -2,7 +2,7 @@
 
 Bullet::Bullet(void)
 {
-	speed = 0.4;
+	speed = 0.4f;
 	state = ALIVE;
 }
 
@@ -15,11 +15,11 @@ Bullet::Bullet(Vector pos, Vector dir)
 	direction = dir.toUnit();
 	this->pos = pos;
 
-	size.x = 0.2;
-	size.y = 0.2;
-	size.z = 0.2;
+	size.x = 0.2f;
+	size.y = 0.2f;
+	size.z = 0.2f;
 
-	speed = 0.95;
+	speed = 0.95f;
 	state = ALIVE;
 	vel = direction * speed;
 }

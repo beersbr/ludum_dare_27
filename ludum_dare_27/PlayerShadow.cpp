@@ -13,9 +13,9 @@ PlayerShadow::PlayerShadow(std::list<ActionState> moves)
 	bType = RC_SHADE;
 	pos = moves.front().pos;
 
-	size.x = 2.2;
-	size.z = 2.2;
-	size.y = 4.5;
+	size.x = 2.2f;
+	size.z = 2.2f;
+	size.y = 4.5f;
 
 	state = ALIVE;
 }

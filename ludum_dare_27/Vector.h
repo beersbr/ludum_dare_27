@@ -22,7 +22,7 @@ public:
     Vector();
     Vector(const float x_, const float y_, const float z_);
     Vector(const Vector& v);
-    Vector(Vector& v);
+    //Vector(Vector& v);
     ~Vector();
 
     bool operator==(const Vector& v) const;
