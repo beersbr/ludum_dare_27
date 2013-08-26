@@ -78,13 +78,15 @@ void World::update()
 	player->update(this);
 
 	std::list<Entity*>::iterator it = entities.begin();
+	std::list<Entity*>::iterator ite = entities.end();
 	while(it != entities.end())
 	{
-		Entity* e = (*it)++;
-
-		e->update(this);
+		(*it)->update(this);
 		if((*it)->state == DEAD)
-			entities.remove(e);
+		{
+			entities.erase(it++);
+		}
+		else (it++);
 	}
 }
 

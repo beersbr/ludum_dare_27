@@ -42,13 +42,13 @@ void Bullet::update(void* w)
 				if(this == *it) 
 					continue;
 
-				if(pos.x < -1000 || pos.x > 1000)
+				if(pos.x < -500 || pos.x > 500)
 					state = DYING;
 
-				if(pos.y < -1000 || pos.y > 1000)
+				if(pos.y < -500 || pos.y > 500)
 					state = DYING;
 
-				if(pos.z < -1000 || pos.z > 1000)
+				if(pos.z < -500 || pos.z > 500)
 					state = DYING;
 
 				if(Entity::colliding(this, (*it)))
