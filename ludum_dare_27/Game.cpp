@@ -176,39 +176,35 @@ void Game::run()
 
 	startTime = SDL_GetTicks();
 
+	// dirt
  	Resources::instance()->createPngResource("images/dirt.png", RC_DIRT);
 	BYTE* image = Resources::instance()->getBytesFromResource(RC_DIRT);
 	glGenTextures(1, &Resources::instance()->textures[0]);
-
 	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[RC_DIRT]);
  	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_BGRA, GL_UNSIGNED_BYTE, image);
 
-	//glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[1]);
-	//glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-	//glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
-
-	//glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[2]);
-	//glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-	//glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);
-	//gluBuild2DMipmaps(GL_TEXTURE_2D, 3, 32, 32, GL_RGBA, GL_UNSIGNED_BYTE, image);
-
+	// grass
 	Resources::instance()->createPngResource("images/grass.png", RC_GRASS);
 	image = Resources::instance()->getBytesFromResource(RC_GRASS);
 	glGenTextures(1, &Resources::instance()->textures[RC_GRASS]);
-
 	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[RC_GRASS]);
  	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_BGRA, GL_UNSIGNED_BYTE, image);
+
+	// shade
+	Resources::instance()->createPngResource("images/shade.png", RC_SHADE);
+	image = Resources::instance()->getBytesFromResource(RC_SHADE);
+	glGenTextures(1, &Resources::instance()->textures[RC_SHADE]);
+	glBindTexture(GL_TEXTURE_2D, Resources::instance()->textures[RC_SHADE]);
+ 	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 32, 32, 0, GL_BGRA, GL_UNSIGNED_BYTE, image);
+
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 

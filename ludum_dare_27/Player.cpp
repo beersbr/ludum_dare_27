@@ -36,6 +36,15 @@ void Player::update(void* w)
 {
 	World* world = (World*)w;
 
+	if(Controller::instance()->isKeyPressed(SDL_SCANCODE_P))
+	{
+		vel = VECTOR_ZERO;
+		pos = Vector(0, 15, 0);
+		
+		world->entities.push_back(new PlayerShadow(record));
+		record.clear();
+	}
+
 	switch(playerState)
 	{
 		case ISJUMPING:

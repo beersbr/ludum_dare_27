@@ -19,7 +19,7 @@ Bullet::Bullet(Vector pos, Vector dir)
 	size.y = 0.2;
 	size.z = 0.2;
 
-	speed = 0.45;
+	speed = 0.8;
 	state = ALIVE;
 	vel = direction * speed;
 }
@@ -42,14 +42,10 @@ void Bullet::update(void* w)
 				if(this == *it) 
 					continue;
 
-				if(pos.x < -500 || pos.x > 500)
-					state = DYING;
-
-				if(pos.y < -500 || pos.y > 500)
-					state = DYING;
-
-				if(pos.z < -500 || pos.z > 500)
-					state = DYING;
+				if(pos.x < -500 || pos.x > 500 || 
+					pos.y < -500 || pos.y > 500 ||
+					pos.z < -500 || pos.z > 500)
+						state = DYING;
 
 				if(Entity::colliding(this, (*it)))
 				{

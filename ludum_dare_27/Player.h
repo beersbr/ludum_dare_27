@@ -7,8 +7,10 @@
 #include "World.h"
 #include "Block.h"
 #include "Bullet.h"
+#include "PlayerShadow.h"
 
 #include <SDL.h>
+#include <stack>
 
 enum PLAYER_STATE {
 	ISWALKING,
@@ -16,15 +18,6 @@ enum PLAYER_STATE {
 	ISRUNNING,
 	ISFREECAM,
 	ISFALLING
-};
-
-struct ActionState
-{
-	double time;
-	Vector pos;
-	Vector dir;
-	Vector vel;
-
 };
 
 class Player : public Entity
@@ -50,6 +43,6 @@ public:
 
 	float mass;
 
-	std::vector<ActionState> record;
+	std::list<ActionState> record;
 
 };
