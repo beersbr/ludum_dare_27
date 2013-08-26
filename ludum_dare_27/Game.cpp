@@ -90,6 +90,7 @@ void Game::render()
 
 	world->render();
 
+	// draw the crosshair
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadIdentity();

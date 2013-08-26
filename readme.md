@@ -23,3 +23,12 @@
 ## 1:58 pm saturday
 * Figured out how I am going to pass data around to the entities.
 * Now starting on collsision.
+
+## 11:35 sunday
+* Have a bunch of the base code written.
+** I need to implement the enemy attack modes and the 10 second timer for the character reset.
+* I need to add gravity to the other movable entities.
+
+
+# Notes
+* I'm cutting it way effing close...
